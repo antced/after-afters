@@ -2,9 +2,10 @@ $(function () {
     // size is how many results
     var size = 20;
     // start date must be in YYYY-MM-DD format
-    var startDate = "2022-11-22"; // will by a dynamic variable chosen by user
+    var startDate = "2022-11-22"; // TODO make this a dynamic variable chosen by user
+    // ticketmaster API is limited to Philadelphia
     var ticketmasterUrl = "https://app.ticketmaster.com/discovery/v2/events.json?size=" + size + "&city=[philadelphia]&localStartDateTime=" + startDate + "T00:00:00," + startDate + "T23:59:59&apikey=CHo9U7G9NvQH3YdZsAJYBoNV5by3z3Hq";
-    
+
     $.ajax({
         url: ticketmasterUrl,
         method: 'GET'
@@ -26,11 +27,32 @@ $(function () {
         var eventTime = data._embedded.events[0].dates.start.localTime;
         console.log("Event Time (24 hours): " + eventTime);
         // url for linking to buy tickets
-        var url = data._embedded.events[0].url;
-        console.log("Ticketing Url: " + url);
+        var ticketUrl = data._embedded.events[0].url;
+        console.log("Ticketing Url: " + ticketUrl);
         // image
         var imageLink = data._embedded.events[0].images[0].url;
         console.log("Image Link: " + imageLink);
+        findFood(venue, venueAddress, venueLat, venueLon, eventTime, ticketUrl, imageLink, ticketUrl);
     });
+
+    function findFood(venue, venueAddress, venueLat, venueLon, eventTime, ticketUrl, imageLink, ticketUrl) {
+        // limit is how many results
+        var limit = 20;
+        var geoapifyUrl = "https://api.geoapify.com/v2/places?categories=catering&bias=proximity:" + venueLon + "," + venueLat + "&limit=" + limit + "&apiKey=abbaf448e8fd46d789223be439a4096c";
+        
+        $.ajax({
+            url: geoapifyUrl,
+            method: 'GET'
+        }).then(function (data) {
+            // all properties
+            console.log(data.features[0].properties);
+            // name
+            var foodName = data.features[0].properties.name;
+            console.log("Restaurant Name: " + foodName);
+            // address
+            var foodAddress = data.features[0].properties.address_line2;
+            console.log("Restaurant Address: " + foodAddress);
+        });
+    }
 
 });
