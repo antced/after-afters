@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css"
+      integrity="sha512-HqxHUkJM0SYcbvxUw5P60SzdOTy/QVwA1JJrvaXJv4q7lmbDZCmZaqz01UPOaQveoxfYRv1tHozWGPMcuTBuvQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://kit.fontawesome.com/2da52f6404.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./assets/css/reset.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>After Afters</title>
+  </head>
+  <body>
+    <nav class="navbar custom-nav" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="./index.html">
+          <i class="fa-solid fa-location-dot fa-3x col-on-primary"></i>
+          <h1 class="title is-1 col-on-primary px-4">After Afters</h1>
+        </a>
+      </div>
+    </nav>
+    <main class="level">
+      <section class="container p-4">
+        <!-- search param form -->
+        <!-- datepicker range -->
+        <div class="field is-horizontal col-surface p-4">
+          <div class="field-label is-normal">
+            <label class="label col-on-surface">Whats the plan?</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control is-expanded">
+                <input class="input col-on-primary" type="date" placeholder="Name" />
+              </p>
+            </div>
+            <div class="field">
+              <p class="control is-expanded">
+                <input class="input col-on-primary" type="date" placeholder="To" value="To" />
+              </p>
+            </div>
+          </div>
+          <!-- checkboxes -->
+          <section class="py-2">
+            <label class="checkbox col-on-surface px-2"> <input type="checkbox" /> Sports</label>
+            <label class="checkbox col-on-surface px-2"> <input type="checkbox" /> Music</label>
+            <label class="checkbox col-on-surface px-2"> <input type="checkbox" /> Plays</label>
+            <label class="checkbox col-on-surface px-2"> <input type="checkbox" /> Other</label>
+          </section>
+          <input class="button col-on-primary" type="submit" value="Search">
+        </div>
+      </section>
+      <section>
+        <!-- saved searches -->
+      </section>
+      <article>
+        <!-- main search results -->
+      </article>
+    </main>
+    <footer></footer>
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="./assets/js/script.js"></script>
+  </body>
+</html>
