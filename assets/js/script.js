@@ -6,6 +6,15 @@ $(function () {
     // ticketmaster API is limited to Philadelphia
     var ticketmasterUrl = "https://app.ticketmaster.com/discovery/v2/events.json?size=" + size + "&city=[philadelphia]&localStartDateTime=" + startDate + "T00:00:00," + startDate + "T23:59:59&apikey=CHo9U7G9NvQH3YdZsAJYBoNV5by3z3Hq";
 
+    document.getElementById('fromDate').addEventListener('change', function() {
+        var fromDate = this.value
+        console.log(fromDate);
+    });
+    document.getElementById('toDate').addEventListener('change', function() {
+        var toDate = this.value
+        console.log(toDate);
+    });
+
     $.ajax({
         url: ticketmasterUrl,
         method: 'GET'
