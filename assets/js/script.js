@@ -1,8 +1,10 @@
 $(function () {
     // size is how many results
     var size = 20;
+    // necessary elements
     var fromDate = document.getElementById("fromDate");
     var toDate = document.getElementById("toDate");
+    var searchResults = $("#searchResults")
     // ticketmaster parameters for API
     var checkBox = ""
     var music = "&classificationName=music&"
@@ -15,18 +17,18 @@ $(function () {
     checkBoxes.on("click", function (event) {
         var checkId = $(event.target).attr("id");
         if (checkId === "checkSports") {
+            // have something clear search results
             checkBox = sports;
         } else if (checkId === "checkMusic") {
+            // have something clear search results
             checkBox = music;
         } else if (checkId === "checkOther") {
+            // have something clear search results
             checkBox = other;
         }
-
     })
 
     searchBtn.on("click", function () {
-        console.log(fromDate.value);
-        console.log(toDate.value);
         getAPI();
     });
 
@@ -38,25 +40,40 @@ $(function () {
                 return response.json();
             })
             .then(function (data) {
-                // all event data in array
 
                 for (let i = 0; i < data._embedded.events.length; i++) {
-                    var eventName = data[0].name[i]
-                    console.log(eventName);
+                    // assign API data
+                    var eventName = data._embedded.events[i].name;
                     var venue = data._embedded.events[i]._embedded.venues[0].name;
                     var venueLat = data._embedded.events[i]._embedded.venues[0].location.latitude;
                     var venueLon = data._embedded.events[i]._embedded.venues[0].location.longitude;
                     var venueAddress = data._embedded.events[i]._embedded.venues[0].address.line1;
+                    var eventDate = data._embedded.events[i].dates.start.localDate;
                     var eventTime = data._embedded.events[i].dates.start.localTime;
                     var ticketUrl = data._embedded.events[i].url;
                     var imageLink = data._embedded.events[i].images[0].url;
+                    // create elements
+                    var figureEl = $('<figure class="m-2 px-4 py-3 col-surface2 level"></figure>');
+                    var topSectEl = $('<section class="is-two-thirds has-text-left">');
+                    var anchorEl = $(`<a href="# LINK To SHOW? #"><h3 class="col-on-surface subtitle mb-2">${eventName}</h3></a>`);
+                    var venueEl = $(`<h3 class="col-on-surface">${venue}</h3>`);
+                    var dateEl = $(`<h3 class="col-on-surface">${eventDate}</h3>`);
+                    var bottomSectEl = $('<section class="is-one-third is-justify-content-right buttons"></section>');
+                    var foodBtn = $('<button class="button custom-btn3 col-on-primary is-small"><b>Food Nearby</b></button>');
+                    var saveBtn = $('<button class="button custom-btn4 col-on-primary is-small"><i class="fa-regular fa-bookmark col-on-primary"></i></button>');
+                    // append elements
+                    searchResults.append(figureEl);
+                    figureEl.append(topSectEl);
+                    topSectEl.append(anchorEl);
+                    topSectEl.append(venueEl);
+                    topSectEl.append(dateEl); //maybe could just be month and day
+                    figureEl.append(bottomSectEl);
+                    bottomSectEl.append(foodBtn);
+                    bottomSectEl.append(saveBtn);
                     findFood(venue, venueAddress, venueLat, venueLon, eventTime, ticketUrl, imageLink, ticketUrl);
 
-                    var figureEl = $('<figure>').attr('class', 'm-2 px-4 py-3 col-surface2 level');
-                    var aEl = $('<a>').attr('class', )
                 }
-                console.log(data._embedded.events);
-                });
+            });
 
         function findFood(venue, venueAddress, venueLat, venueLon, eventTime, ticketUrl, imageLink, ticketUrl) {
             // limit is how many results
@@ -69,7 +86,7 @@ $(function () {
                 })
                 .then(function (data) {
                     // all properties
-                    console.log(data.features[0].properties);
+                    // console.log(data.features[0].properties);
                     // name
                     var foodName = data.features[0].properties.name;
                     console.log("Restaurant Name: " + foodName);
@@ -77,7 +94,6 @@ $(function () {
                     var foodAddress = data.features[0].properties.address_line2;
                     console.log("Restaurant Address: " + foodAddress);
                 });
-
         }
     }
 
