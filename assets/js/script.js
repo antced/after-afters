@@ -39,29 +39,22 @@ $(function () {
             })
             .then(function (data) {
                 // all event data in array
+
+                for (let i = 0; i < data._embedded.events.length; i++) {
+                    // var eventName = data.name[i]
+                    console.log(eventName);
+                    var venue = data._embedded.events[i]._embedded.venues[0].name;
+                    var venueLat = data._embedded.events[i]._embedded.venues[0].location.latitude;
+                    var venueLon = data._embedded.events[i]._embedded.venues[0].location.longitude;
+                    var venueAddress = data._embedded.events[i]._embedded.venues[0].address.line1;
+                    var eventTime = data._embedded.events[i].dates.start.localTime;
+                    var ticketUrl = data._embedded.events[i].url;
+                    var imageLink = data._embedded.events[i].images[0].url;
+                    findFood(venue, venueAddress, venueLat, venueLon, eventTime, ticketUrl, imageLink, ticketUrl);
+
+                }
                 console.log(data._embedded.events);
-                // venue name for display
-                var venue = data._embedded.events[0]._embedded.venues[0].name;
-                console.log("Venue Name: " + venue);
-                // venue address
-                var venueAddress = data._embedded.events[0]._embedded.venues[0].address.line1;
-                console.log("Venue Address: " + venueAddress);
-                // venue latitude and longitude to find food nearby
-                var venueLat = data._embedded.events[0]._embedded.venues[0].location.latitude;
-                var venueLon = data._embedded.events[0]._embedded.venues[0].location.longitude;
-                console.log("Venue Latitude: " + venueLat);
-                console.log("Venue Longitude: " + venueLon);
-                // start time of event, to send to food api to check if open
-                var eventTime = data._embedded.events[0].dates.start.localTime;
-                console.log("Event Time (24 hours): " + eventTime);
-                // url for linking to buy tickets
-                var ticketUrl = data._embedded.events[0].url;
-                console.log("Ticketing Url: " + ticketUrl);
-                // image
-                var imageLink = data._embedded.events[0].images[0].url;
-                console.log("Image Link: " + imageLink);
-                findFood(venue, venueAddress, venueLat, venueLon, eventTime, ticketUrl, imageLink, ticketUrl);
-            });
+                });
 
         function findFood(venue, venueAddress, venueLat, venueLon, eventTime, ticketUrl, imageLink, ticketUrl) {
             // limit is how many results
