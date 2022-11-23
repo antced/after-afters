@@ -45,23 +45,23 @@
               <div class="field">
                 <p class="control is-expanded">
                   <label for="input" class="col-on-surface">From</label>
-                  <input id='fromDate' class="input col-on-primary" type="date" placeholder="Name" />
+                  <input id="fromDate" class="input col-on-primary" type="date" placeholder="From" />
                 </p>
               </div>
               <div class="field">
                 <p class="control is-expanded">
                   <label for="input" class="col-on-surface">To</label>
-                  <input id='toDate' class="input col-on-primary" type="date" placeholder="To" />
+                  <input id="toDate" class="input col-on-primary" type="date" placeholder="To" />
                 </p>
               </div>
             </div>
             <!-- checkboxes -->
             <section class="py-2 has-text-centered pb-4">
-              <label class="custom-checkbox col-on-surface px-2"> <input type="checkbox" /> Sports</label>
-              <label class="custom-checkbox col-on-surface px-2"> <input type="checkbox" /> Music</label>
-              <label class="custom-checkbox col-on-surface px-2"> <input type="checkbox" /> Other</label>
+              <label class="custom-checkbox col-on-surface px-2"> <input id="checkSports" type="checkbox" /> Sports</label>
+              <label class="custom-checkbox col-on-surface px-2"> <input id="checkMusic" type="checkbox" /> Music</label>
+              <label class="custom-checkbox col-on-surface px-2"> <input id="checkOther" type="checkbox" /> Other</label>
             </section>
-            <input class="button is-fullwidth custom-btn col-on-primary" type="submit" value="Search" />
+            <button id="searchBtn" class="button is-fullwidth custom-btn col-on-primary">Search</button>
           </div>
         </section>
 
@@ -133,10 +133,10 @@
       </div>
     </footer>
     <script
-      src="https://code.jquery.com/jquery-3.6.1.min.js"
-      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
-      crossorigin="anonymous"
-    ></script>
+			  src="https://code.jquery.com/jquery-3.6.1.min.js"
+			  integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+			  crossorigin="anonymous"></script>
+		
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="./assets/js/script.js"></script>
   </body>
