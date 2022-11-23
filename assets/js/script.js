@@ -21,7 +21,6 @@ $(function () {
         } else if (checkId === "checkOther") {
             checkBox = other;
         }
-
     })
 
     searchBtn.on("click", function () {
@@ -38,11 +37,10 @@ $(function () {
                 return response.json();
             })
             .then(function (data) {
-                // all event data in array
 
                 for (let i = 0; i < data._embedded.events.length; i++) {
-                    // var eventName = data.name[i]
-                    console.log(eventName);
+                    // var eventName = data[i].name
+                    // console.log(eventName);
                     var venue = data._embedded.events[i]._embedded.venues[0].name;
                     var venueLat = data._embedded.events[i]._embedded.venues[0].location.latitude;
                     var venueLon = data._embedded.events[i]._embedded.venues[0].location.longitude;
@@ -54,7 +52,7 @@ $(function () {
 
                 }
                 console.log(data._embedded.events);
-                });
+            });
 
         function findFood(venue, venueAddress, venueLat, venueLon, eventTime, ticketUrl, imageLink, ticketUrl) {
             // limit is how many results
@@ -75,7 +73,6 @@ $(function () {
                     var foodAddress = data.features[0].properties.address_line2;
                     console.log("Restaurant Address: " + foodAddress);
                 });
-
         }
     }
 
