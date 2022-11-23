@@ -49,10 +49,13 @@ $(function () {
                     var venueLon = data._embedded.events[i]._embedded.venues[0].location.longitude;
                     var venueAddress = data._embedded.events[i]._embedded.venues[0].address.line1;
                     var eventDate = data._embedded.events[i].dates.start.localDate;
+                    var eventDateB = eventDate.split('-');
+                    eventDate = eventDateB[1] + "-" + eventDateB[2] + "-" + eventDateB[0];
                     var eventTime = data._embedded.events[i].dates.start.localTime;
                     var ticketUrl = data._embedded.events[i].url;
                     var imageLink = data._embedded.events[i].images[0].url;
                     // create elements
+                    var poster = $()
                     var figureEl = $('<figure class="m-2 px-4 py-3 col-surface2 level"></figure>');
                     var topSectEl = $('<section class="is-two-thirds has-text-left">');
                     var anchorEl = $(`<a href="# LINK To SHOW? #"><h3 class="col-on-surface subtitle mb-2">${eventName}</h3></a>`);
