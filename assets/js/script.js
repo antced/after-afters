@@ -3,8 +3,26 @@ $(function () {
     var size = 20;
     var fromDate = document.getElementById("fromDate");
     var toDate = document.getElementById("toDate");
-
+    // ticketmaster parameters for API
+    var checkBox = ""
+    var music = "&classificationName=music&"
+    var sports = "&classificationName=sports&"
+    var other = ""
+    // event listeners
     var searchBtn = $("#searchBtn");
+    var checkBoxes = $(".custom-checkbox");
+
+    checkBoxes.on("click", function (event) {
+        var checkId = $(event.target).attr("id");
+        if (checkId === "checkSports") {
+            checkBox = sports;
+        } else if (checkId === "checkMusic") {
+            checkBox = music;
+        } else if (checkId === "checkOther") {
+            checkBox = other;
+        }
+
+    })
 
     searchBtn.on("click", function () {
         console.log(fromDate.value);
@@ -13,8 +31,7 @@ $(function () {
     });
 
     function getAPI() {
-        var ticketmasterUrl = "https://app.ticketmaster.com/discovery/v2/events.json?size=" + size + "&city=[philadelphia]&localStartDateTime=" + fromDate.value + "T00:00:00," + toDate.value + "T23:59:59&apikey=CHo9U7G9NvQH3YdZsAJYBoNV5by3z3Hq";
-        console.log(ticketmasterUrl);
+        var ticketmasterUrl = "https://app.ticketmaster.com/discovery/v2/events.json?" + checkBox + "size=" + size + "&city=[philadelphia]&localStartDateTime=" + fromDate.value + "T00:00:00," + toDate.value + "T23:59:59&apikey=CHo9U7G9NvQH3YdZsAJYBoNV5by3z3Hq";
 
         fetch(ticketmasterUrl)
             .then(function (response) {
