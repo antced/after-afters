@@ -41,7 +41,7 @@ $(function () {
                 // all event data in array
 
                 for (let i = 0; i < data._embedded.events.length; i++) {
-                    // var eventName = data.name[i]
+                    var eventName = data[0].name[i]
                     console.log(eventName);
                     var venue = data._embedded.events[i]._embedded.venues[0].name;
                     var venueLat = data._embedded.events[i]._embedded.venues[0].location.latitude;
@@ -52,6 +52,8 @@ $(function () {
                     var imageLink = data._embedded.events[i].images[0].url;
                     findFood(venue, venueAddress, venueLat, venueLon, eventTime, ticketUrl, imageLink, ticketUrl);
 
+                    var figureEl = $('<figure>').attr('class', 'm-2 px-4 py-3 col-surface2 level');
+                    var aEl = $('<a>').attr('class', )
                 }
                 console.log(data._embedded.events);
                 });
