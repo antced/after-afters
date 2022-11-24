@@ -43,7 +43,7 @@ $(function () {
 
                 for (let i = 0; i < data._embedded.events.length; i++) {
                     // assign API data
-                    var eventName = data._embedded.events[i].name;
+                    var eventName = data._embedded.events[i].name.substring(0,40);
                     var venue = data._embedded.events[i]._embedded.venues[0].name;
                     var venueLat = data._embedded.events[i]._embedded.venues[0].location.latitude;
                     var venueLon = data._embedded.events[i]._embedded.venues[0].location.longitude;
@@ -55,18 +55,24 @@ $(function () {
                     var ticketUrl = data._embedded.events[i].url;
                     var imageLink = data._embedded.events[i].images[0].url;
                     // create elements
-                    var poster = $()
-                    var figureEl = $('<figure class="m-2 px-4 py-3 col-surface2 level"></figure>');
-                    var topSectEl = $('<section class="is-two-thirds has-text-left">');
-                    var anchorEl = $(`<a href="# LINK To SHOW? #"><h3 class="col-on-surface subtitle mb-2">${eventName}</h3></a>`);
-                    var venueEl = $(`<h3 class="col-on-surface">${venue}</h3>`);
+                    var imgSectEl = $('<section class="media-left level m-0 is-mobile"></section>');
+                    var imgSizeEl = $('<p class="image custom-img" alt="woopsie"></p>')
+                    var posterEl = $('<img src="${imageLink}">');
+                    var figureEl = $('<figure class="m-2 px-4 py-3 col-surface2 level customMedia"></figure>');
+                    var topSectEl = $('<section class="is-two-thirds has-text-left pl-4">');
+                    var anchorEl = $(`<a href="${ticketUrl}"><h3 class="col-on-surface subtitle is-5 custom-textBox">${eventName}</h3></a>`);
+                    var venueEl = $(`<h3 class="col-on-surface custom-textBox">${venue}</h3>`);
                     var dateEl = $(`<h3 class="col-on-surface">${eventDate}</h3>`);
-                    var bottomSectEl = $('<section class="is-one-third is-justify-content-right buttons"></section>');
-                    var foodBtn = $('<button class="button custom-btn3 col-on-primary is-small"><b>Food Nearby</b></button>');
-                    var saveBtn = $('<button class="button custom-btn4 col-on-primary is-small"><i class="fa-regular fa-bookmark col-on-primary"></i></button>');
+                    var bottomSectEl = $('<section class="is-one-quarter is-justify-content-right buttons"></section>');
+                    var foodBtn = $('<button class="button custom-btn3 col-on-primary is-small m-1"><b>Food Nearby</b></button>');
+                    var saveBtn = $('<button class="button custom-btn4 col-on-primary is-small favorite m-1"><i class="fa-regular fa-bookmark col-on-primary"></i></button>');
                     // append elements
+                    figureEl.append(imgSectEl);
+                    imgSectEl.append(imgSizeEl);
+                    imgSectEl.append(topSectEl)
+                    imgSizeEl.append(posterEl)
                     searchResults.append(figureEl);
-                    figureEl.append(topSectEl);
+                    // figureEl.append(topSectEl);
                     topSectEl.append(anchorEl);
                     topSectEl.append(venueEl);
                     topSectEl.append(dateEl); //maybe could just be month and day
