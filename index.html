@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="./assets/images/hand-point-right-solid-blue.png">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
@@ -21,6 +22,7 @@
     <script src="https://kit.fontawesome.com/2da52f6404.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./assets/css/reset.css" />
     <link rel="stylesheet" href="./assets/css/style.css" />
+    
     <title>After Afters</title>
   </head>
   <body>
@@ -56,7 +58,7 @@
               </div>
             </div>
             <!-- checkboxes -->
-            <section class="py-2 has-text-centered pb-4">
+            <section class="py-2 has-text-centered pb-4 custom-radioOb">
               <label class="custom-checkbox col-on-surface px-2 radio"> <input id="checkSports" type="radio" name="radio" /> Sports</label>
               <label class="custom-checkbox col-on-surface px-2 radio"> <input id="checkMusic" type="radio" name="radio" /> Music</label>
               <label class="custom-checkbox col-on-surface px-2 radio"> <input id="checkOther" type="radio"name="radio" /> Other</label>
@@ -83,11 +85,32 @@
         <!-- main search results -->
         <section class="m-3 p-2 col-surface">
           <section class="p-4">
-            <h2 class="col-on-surface subtitle is-4">Search Results</h2>
+            <h2 id="resultsEl" class="col-on-surface subtitle is-4">Upcoming Events</h2>
           </section>
           <!-- sample search result figure-->
           <section id="searchResults">
-          <!-- <figure class="m-2 px-4 py-3 col-surface2 level">
+            <!--
+           <figure class="m-2 px-4 py-3 col-surface2 level customMedia">
+            <section class="media-left level m-0 is-mobile">
+              <p class="image custom-img ">
+                <img src="./assets/images/hand-point-right-solid-blue.png" alt="woopsie">
+              </p>
+              <section class="is-two-thirds has-text-left pl-4">
+                <a href="# LINK To SHOW? #" class="col-on-surface subtitle is-5 custom-textBox">Show Name #</a>
+                <h3 class="col-on-surface"># Venue - Venue #</h3>
+                <h3 class="col-on-surface"># Date #</h3>
+              </section>
+            </section>
+            <section class="is-one-quarter is-justify-content-right buttons">
+              <button class="button custom-btn3 col-on-primary is-small m-1"><b>Food Nearby</b></button>
+              <button class="button custom-btn4 col-on-primary is-small favorite m-1"><i class="fa-regular fa-bookmark col-on-primary"></i></button>
+            </section>
+           </figure>
+
+https://s1.ticketm.net/dam/a/4cb/34bfc38a-11b0-430f-a928-b14e338db4cb_442371_TABLET_LANDSCAPE_3_2.jpg
+
+
+          <figure class="m-2 px-4 py-3 col-surface2 level">
             <section class="is-two-thirds has-text-left">
               <a href="# LINK To SHOW? #"><h3 class="col-on-surface subtitle mb-2"># Show Name - Show Name #</h3></a>
               <h3 class="col-on-surface"># Venue - Venue #</h3>
@@ -95,9 +118,9 @@
             </section>
             <section class="is-one-third is-justify-content-right buttons">
               <button class="button custom-btn3 col-on-primary is-small"><b>Food Nearby</b></button>
-              <button class="button custom-btn4 col-on-primary is-small favorite"><i class="fa-regular fa-bookmark col-on-primary"></i></button>
+              <button class="button custom-btn4 col-on-primary is-small"><i class="fa-regular fa-bookmark col-on-primary"></i></button>
             </section>
-
+          </figure> -->
         </section>
       </article>
     </main>

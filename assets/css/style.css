@@ -65,7 +65,7 @@ input,
 textarea {
   background-color: var(--col-on-surface);
 }
-input[type="checkbox"] {
+input[type="radio"] {
   accent-color: var(--col-p-200);
   width: 1rem;
   height: 1rem;
@@ -105,4 +105,41 @@ input[type="checkbox"] {
 }
 a {
   color: var(--col-surface2);
+}
+.customMedia {
+  display: flex;
+  text-align: inherit;
+  justify-content: space-between;
+  align-items: center;
+}
+.custom-textBox {
+  inline-size: 30ch;
+}
+.custom-img {
+  height: 64px;
+  width: 64px;
+  overflow-x: hidden;
+}
+.custom-radioOb {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+@media screen and (max-width: 768px) {
+  .custom-textBox {
+    inline-size: 20ch;
+  }
+  .customMedia {
+    display: flex;
+    text-align: inherit;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .custom-textBox {
+    inline-size: 20ch;
+  }
 }
