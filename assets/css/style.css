@@ -65,7 +65,7 @@ input,
 textarea {
   background-color: var(--col-on-surface);
 }
-input[type="checkbox"] {
+input[type="radio"] {
   accent-color: var(--col-p-200);
   width: 1rem;
   height: 1rem;
@@ -118,8 +118,14 @@ a {
 .custom-img {
   height: 64px;
   width: 64px;
+  overflow-x: hidden;
 }
-
+.custom-radioOb {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
 @media screen and (max-width: 768px) {
   .custom-textBox {
     inline-size: 20ch;

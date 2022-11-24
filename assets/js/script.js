@@ -43,7 +43,7 @@ $(function () {
 
                 for (let i = 0; i < data._embedded.events.length; i++) {
                     // assign API data
-                    var eventName = data._embedded.events[i].name.substring(0,40);
+                    var eventName = data._embedded.events[i].name;
                     var venue = data._embedded.events[i]._embedded.venues[0].name;
                     var venueLat = data._embedded.events[i]._embedded.venues[0].location.latitude;
                     var venueLon = data._embedded.events[i]._embedded.venues[0].location.longitude;
@@ -53,15 +53,17 @@ $(function () {
                     eventDate = eventDateB[1] + "-" + eventDateB[2] + "-" + eventDateB[0];
                     var eventTime = data._embedded.events[i].dates.start.localTime;
                     var ticketUrl = data._embedded.events[i].url;
-                    var imageLink = data._embedded.events[i].images[0].url;
+                    var imageLink = data._embedded.events[i].images[8].url;
+                    // var minPrice = data._embedded.events[i].priceRanges[0].min
+                    // console.log(minPrice);
                     // create elements
                     var imgSectEl = $('<section class="media-left level m-0 is-mobile"></section>');
-                    var imgSizeEl = $('<p class="image custom-img" alt="woopsie"></p>')
-                    var posterEl = $('<img src="${imageLink}">');
+                    var imgSizeEl = $('<p class="image custom-img"></p>')
+                    var posterEl = $(`<img src="'${imageLink}'" alt="">`);
                     var figureEl = $('<figure class="m-2 px-4 py-3 col-surface2 level customMedia"></figure>');
                     var topSectEl = $('<section class="is-two-thirds has-text-left pl-4">');
                     var anchorEl = $(`<a href="${ticketUrl}"><h3 class="col-on-surface subtitle is-5 custom-textBox">${eventName}</h3></a>`);
-                    var venueEl = $(`<h3 class="col-on-surface custom-textBox">${venue}</h3>`);
+                    var venueEl = $(`<h3 class="col-on-surface custom-textBox"><b>${venue}</b></h3>`);
                     var dateEl = $(`<h3 class="col-on-surface">${eventDate}</h3>`);
                     var bottomSectEl = $('<section class="is-one-quarter is-justify-content-right buttons"></section>');
                     var foodBtn = $('<button class="button custom-btn3 col-on-primary is-small m-1"><b>Food Nearby</b></button>');
@@ -80,7 +82,6 @@ $(function () {
                     bottomSectEl.append(foodBtn);
                     bottomSectEl.append(saveBtn);
                     findFood(venue, venueAddress, venueLat, venueLon, eventTime, ticketUrl, imageLink, ticketUrl);
-
                 }
             });
 
@@ -95,13 +96,16 @@ $(function () {
                 })
                 .then(function (data) {
                     // all properties
-                    // console.log(data.features[0].properties);
+                     console.log(data.features[0].properties);
                     // name
                     var foodName = data.features[0].properties.name;
                     console.log("Restaurant Name: " + foodName);
                     // address
                     var foodAddress = data.features[0].properties.address_line2;
                     console.log("Restaurant Address: " + foodAddress);
+                    // distance from venue
+                    var distance = data.features[0].properties.distance;
+                    console.log(distance);
                 });
         }
     }
