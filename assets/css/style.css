@@ -25,12 +25,13 @@
   --col-s-700: #2ac3de;
   /* icons, elements, text */
   --col-on-bg: #9aa5ce;
-  --col-on-surface: #a9b1d6;
+  --col-on-surface: #b3badb;
   --col-on-primary: #1a1b26;
   --col-on-secondary: #1a1b26;
 }
 ::-webkit-scrollbar {
   width: 0px;
+  display: none;
 }
 body {
   font-family: var(--ff2);
@@ -120,7 +121,6 @@ a {
   height: 64px;
   width: 64px;
   overflow: hidden;
-  /* box-shadow: 3px 3px 6px #00000018; */
 }
 .custom-img img {
   height: 64px;
@@ -128,7 +128,7 @@ a {
   overflow: hidden;
   object-fit: cover;
   border-radius: var(--radius2);
-  border: 2px solid var(--col-on-surface);
+  box-shadow: inset 4px 4px 6px #0000003b;
 }
 .custom-radioOb {
   display: flex;

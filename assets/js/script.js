@@ -1,11 +1,13 @@
 $(function () {
   // size is how many results
-  var size = 20;
+  var size = 24;
   // necessary elements
   var fromDate = document.getElementById("fromDate");
   var toDate = document.getElementById("toDate");
   var searchResults = $("#searchResults");
   var resultContent = $("#resultContent");
+  var eventsEl = $("#eventsEl");
+  var dateRangeSudoEl = $("#dateRangeEl");
   // ticketmaster parameters for API
   var checkBox = "";
   var music = "&classificationName=music&";
@@ -28,9 +30,16 @@ $(function () {
       checkBox = other;
     }
   });
-
+  function dateConvert(x) {
+    //TODO: add one day
+    var step1 = x.split("-");
+    var step2 = Date.UTC(step1[0], step1[1] - 1, step1[2]);
+    var step3 = new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short', day: 'numeric' }).format(step2);
+    return step3;
+  }
   searchBtn.on("click", function () {
-    // TODO: Clear the searches before searching again
+    dateRangeSudoEl.replaceWith(dateRangeSudoEl);
+    searchResults.empty();
     getAPI();
   });
 
@@ -43,6 +52,9 @@ $(function () {
         return response.json();
       })
       .then(function (data) {
+
+        var dateRangeEl = $(`<h3 id="dateRange" class="col-on-surface title is-6">${dateConvert(fromDate.value)} - ${dateConvert(toDate.value)}</h3>`);
+        eventsEl.append(dateRangeEl);
         for (let i = 0; i < data._embedded.events.length; i++) {
           // assign API data
           var eventName = data._embedded.events[i].name;
@@ -50,10 +62,7 @@ $(function () {
           var venueLat = data._embedded.events[i]._embedded.venues[0].location.latitude;
           var venueLon = data._embedded.events[i]._embedded.venues[0].location.longitude;
           var venueAddress = data._embedded.events[i]._embedded.venues[0].address.line1;
-          var eventDate = data._embedded.events[i].dates.start.localDate;
-          var eventDateB = eventDate.split("-");
-          var eventDateTxt = Date.UTC(eventDateB[0], eventDateB[1], eventDateB[2]); //eventDateB[1] + "-" + eventDateB[2] + "-" + eventDateB[0];
-          var eventDateFinal = new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short', day: 'numeric' }).format(eventDateTxt);
+          var eventDate = dateConvert(data._embedded.events[i].dates.start.localDate);
           var eventTime = data._embedded.events[i].dates.start.localTime;
           var ticketUrl = data._embedded.events[i].url;
           var imageLink = data._embedded.events[i].images[8].url;
@@ -63,27 +72,25 @@ $(function () {
           // create elements
           var imgSectEl = $('<section class="media-left level m-0 is-mobile"></section>');
           var imgSizeEl = $('<p class="image custom-img"></p>');
-          var posterEl = $(`<img src="${imageLink}" alt="woopsie" onstalled="this.src='./assets/images/hand-point-right-solid.svg'">`);
+          var posterEl = $(`<img src="${imageLink}" alt="woopsie" onerror="this.src='./assets/images/hand-point-right-solid.svg'">`);
           var figureEl = $('<figure id="resultContent" class="m-2 px-4 py-3 col-surface2 level customMedia"></figure>');
           var topSectEl = $('<section class="is-two-thirds has-text-left pl-4">');
           var anchorEl = $(`<a href="${ticketUrl}" target="_blank"><h3 class="col-on-surface subtitle is-5 custom-textBox">${eventName}</h3></a>`);
           var venueEl = $(`<h3 class="col-on-surface custom-textBox"><b>${venue}</b></h3>`);
-          var dateEl = $(`<h3 class="col-on-surface is-6">${eventDateFinal}</h3>`);
+          var dateEl = $(`<h3 class="col-on-surface is-6">${eventDate}</h3>`);
           var bottomSectEl = $('<section class="is-one-quarter is-justify-content-right buttons"></section>');
           var foodBtn = $(`<button class="button custom-btn3 col-on-primary is-small m-1" id="foodNearBtn${item}" >Food Nearby</button>`);
-          var saveBtn = $(
-            '<button class="button custom-btn4 col-on-primary is-small favorite m-1"><i class="fa-regular fa-bookmark col-on-primary"></i></button>'
-          );
+          var saveBtn = $('<button class="button custom-btn4 col-on-primary is-small favorite m-1"><i class="fa-regular fa-bookmark col-on-primary"></i></button>');
+          
           // append elements
           figureEl.append(imgSectEl);
           imgSectEl.append(imgSizeEl);
           imgSectEl.append(topSectEl);
           imgSizeEl.append(posterEl);
           searchResults.append(figureEl);
-          // figureEl.append(topSectEl);
           topSectEl.append(anchorEl);
           topSectEl.append(venueEl);
-          topSectEl.append(dateEl); //maybe could just be month and day
+          topSectEl.append(dateEl);
           figureEl.append(bottomSectEl);
           bottomSectEl.append(foodBtn);
           bottomSectEl.append(saveBtn);
@@ -114,6 +121,12 @@ $(function () {
               });
           }
         }
+        // reset form elements
+        fromDate.value = "";
+        toDate.value = "";
+        checkOther.checked = false;
+        checkMusic.checked = false;
+        checkSports.checked = false;
       });
       
   
