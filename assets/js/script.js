@@ -32,10 +32,12 @@ $(function () {
   });
   function dateConvert(x) {
     //TODO: add one day
-    var step1 = x.split("-");
+    var y = new Date(x);
+    y.setDate(y.getDate() + 1);
+    var step1 = x.split("-");console.log();
     var step2 = Date.UTC(step1[0], step1[1] - 1, step1[2]);
     var step3 = new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short', day: 'numeric' }).format(step2);
-    return step3;
+    return step3 + step1[2];
   }
   searchBtn.on("click", function () {
     dateRangeSudoEl.replaceWith(dateRangeSudoEl);
