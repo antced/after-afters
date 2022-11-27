@@ -8,6 +8,7 @@ $(function () {
   var resultContent = $("#resultContent");
   var eventsEl = $("#eventsEl");
   var dateRangeSudoEl = $("#dateRangeEl");
+  var rangeCont = $("rangeSec");
   // ticketmaster parameters for API
   var checkBox = "";
   var music = "&classificationName=music&";
@@ -31,16 +32,13 @@ $(function () {
     }
   });
   function dateConvert(x) {
-    //TODO: add one day
-    var y = new Date(x);
-    y.setDate(y.getDate() + 1);
     var step1 = x.split("-");console.log();
-    var step2 = Date.UTC(step1[0], step1[1] - 1, step1[2]);
-    var step3 = new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short', day: 'numeric' }).format(step2);
-    return step3 + step1[2];
+    var step2 = Date.UTC(step1[0]+0, step1[1] - 1, step1[2]);
+    var step3 = new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short', day: '2-digit' }).format(step2);
+    return step3.slice(0, -2) + step1[2];
   }
   searchBtn.on("click", function () {
-    dateRangeSudoEl.replaceWith(dateRangeSudoEl);
+    rangeCont.empty();
     searchResults.empty();
     getAPI();
   });

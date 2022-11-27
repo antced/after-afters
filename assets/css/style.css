@@ -116,6 +116,7 @@ a {
 }
 .custom-textBox {
   inline-size: 30ch;
+  max-lines: 3;
 }
 .custom-img {
   height: 64px;
@@ -136,9 +137,17 @@ a {
   flex-direction: row;
   flex-wrap: nowrap;
 }
+@media screen and (max-width: 400px) {
+  .custom-img img,
+  .custom-img {
+    height: 48px;
+    width: 48px;
+  }
+}
 @media screen and (max-width: 768px) {
   .custom-textBox {
-    inline-size: 20ch;
+    inline-size: 18ch;
+    max-lines: 3;
   }
   .customMedia {
     display: flex;
