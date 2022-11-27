@@ -40,6 +40,7 @@ $(function () {
                 return response.json();
             })
             .then(function (data) {
+                console.log(data);
 
                 for (let i = 0; i < data._embedded.events.length; i++) {
                     // assign API data
@@ -49,21 +50,32 @@ $(function () {
                     var venueLon = data._embedded.events[i]._embedded.venues[0].location.longitude;
                     var venueAddress = data._embedded.events[i]._embedded.venues[0].address.line1;
                     var eventDate = data._embedded.events[i].dates.start.localDate;
+                    var eventDateB = eventDate.split('-');
+                    eventDate = eventDateB[1] + "-" + eventDateB[2] + "-" + eventDateB[0];
                     var eventTime = data._embedded.events[i].dates.start.localTime;
                     var ticketUrl = data._embedded.events[i].url;
-                    var imageLink = data._embedded.events[i].images[0].url;
+                    var imageLink = data._embedded.events[i].images[8].url;
+                    // var minPrice = data._embedded.events[i].priceRanges[0].min
+                    // console.log(minPrice);
                     // create elements
-                    var figureEl = $('<figure class="m-2 px-4 py-3 col-surface2 level"></figure>');
-                    var topSectEl = $('<section class="is-two-thirds has-text-left">');
-                    var anchorEl = $(`<a href="# LINK To SHOW? #"><h3 class="col-on-surface subtitle mb-2">${eventName}</h3></a>`);
-                    var venueEl = $(`<h3 class="col-on-surface">${venue}</h3>`);
+                    var imgSectEl = $('<section class="media-left level m-0 is-mobile"></section>');
+                    var imgSizeEl = $('<p class="image custom-img"></p>')
+                    var posterEl = $(`<img src="${imageLink}" alt="">`);
+                    var figureEl = $('<figure class="m-2 px-4 py-3 col-surface2 level customMedia"></figure>');
+                    var topSectEl = $('<section class="is-two-thirds has-text-left pl-4">');
+                    var anchorEl = $(`<a href="${ticketUrl}"><h3 class="col-on-surface subtitle is-5 custom-textBox">${eventName}</h3></a>`);
+                    var venueEl = $(`<h3 class="col-on-surface custom-textBox"><b>${venue}</b></h3>`);
                     var dateEl = $(`<h3 class="col-on-surface">${eventDate}</h3>`);
-                    var bottomSectEl = $('<section class="is-one-third is-justify-content-right buttons"></section>');
-                    var foodBtn = $('<button class="button custom-btn3 col-on-primary is-small"><b>Food Nearby</b></button>');
-                    var saveBtn = $('<button class="button custom-btn4 col-on-primary is-small"><i class="fa-regular fa-bookmark col-on-primary"></i></button>');
+                    var bottomSectEl = $('<section class="is-one-quarter is-justify-content-right buttons"></section>');
+                    var foodBtn = $('<button class="button custom-btn3 col-on-primary is-small m-1"><b>Food Nearby</b></button>');
+                    var saveBtn = $('<button class="button custom-btn4 col-on-primary is-small favorite m-1"><i class="fa-regular fa-bookmark col-on-primary"></i></button>');
                     // append elements
+                    figureEl.append(imgSectEl);
+                    imgSectEl.append(imgSizeEl);
+                    imgSectEl.append(topSectEl)
+                    imgSizeEl.append(posterEl)
                     searchResults.append(figureEl);
-                    figureEl.append(topSectEl);
+                    // figureEl.append(topSectEl);
                     topSectEl.append(anchorEl);
                     topSectEl.append(venueEl);
                     topSectEl.append(dateEl); //maybe could just be month and day
@@ -85,13 +97,16 @@ $(function () {
                 })
                 .then(function (data) {
                     // all properties
-                    // console.log(data.features[0].properties);
+                     console.log(data.features[0].properties);
                     // name
                     var foodName = data.features[0].properties.name;
                     console.log("Restaurant Name: " + foodName);
                     // address
                     var foodAddress = data.features[0].properties.address_line2;
                     console.log("Restaurant Address: " + foodAddress);
+                    // distance from venue
+                    var distance = data.features[0].properties.distance;
+                    console.log(distance);
                 });
         }
     }
