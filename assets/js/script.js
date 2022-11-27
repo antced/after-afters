@@ -1,4 +1,4 @@
-$(function () {
+$(function ()
     // size is how many results
     var size = 24;
     // necessary elements
@@ -25,6 +25,7 @@ $(function () {
     var latLonArr = [];
     // delcare 16-18 globally to use them in the favorites list?
 
+
     checkBoxes.on("click", function (event) {
         var checkId = $(event.target).attr("id");
         if (checkId === "checkSports") {
@@ -46,7 +47,6 @@ $(function () {
         var step3 = new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short', day: '2-digit' }).format(step2);
         return step3.slice(0, -2) + step1[2];
     }
-
     // search button event listener
     searchBtn.on("click", function () {
         // keeps search results from overpopulating
@@ -63,6 +63,7 @@ $(function () {
 
         fetch(ticketmasterUrl)
             .then(function (response) {
+
                 return response.json();
             })
             .then(function (data) {
@@ -161,8 +162,8 @@ $(function () {
                     // and classes assigned for styling 
 
                     // when page loads, items saved in local storage populate favorites list 
-
                 }
             })
     };
 });
+
