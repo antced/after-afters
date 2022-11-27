@@ -20,6 +20,7 @@ $(function () {
     var modal = $("#modal");
     var modalList = $("#modalList");
     var modalBg = $(".modal-background");
+    var modalClose = $(".modal-close");
     // favorites variables
     var eventName;
     var eventDate;
@@ -114,7 +115,7 @@ $(function () {
                     // food nearby function
                     function findFood(event) {
                         // limit is how many results
-                        var limit = 20;
+                        var limit = 12;
                         // name of the button that was clicked
                         var buttonName = $(event.target).attr("id")
                         var buttonNumber = buttonName.slice(-1);
@@ -122,7 +123,7 @@ $(function () {
                         var foodLat = latLonArr[buttonNumber][0];
                         var foodLon = latLonArr[buttonNumber][1];
                         // geoapify API url with custom variables
-                        var geoapifyUrl = "https://api.geoapify.com/v2/places?categories=catering&bias=proximity:" + foodLon + "," + foodLat + "&limit=" + limit + "&apiKey=abbaf448e8fd46d789223be439a4096c";
+                        var geoapifyUrl = "https://api.geoapify.com/v2/places?categories=catering&conditions=named&filter=circle:" + foodLon + "," + foodLat + ",1000&bias=proximity:" + foodLon + "," + foodLat + "&lang=en&limit=" + limit + "&apiKey=abbaf448e8fd46d789223be439a4096c";
 
                         fetch(geoapifyUrl)
                             .then(function (response) {
@@ -138,24 +139,30 @@ $(function () {
                                     var foodName = data.features[i].properties.name;
                                     console.log("Restaurant Name: " + foodName);
                                     // address
-                                    var foodAddress = data.features[i].properties.address_line2;
+                                    var foodAddress = data.features[i].properties.address_line2.slice(0, -26);
                                     console.log("Restaurant Address: " + foodAddress);
                                     // distance from venue
                                     var distance = data.features[i].properties.distance;
+                                    distance = Math.round(distance*3.281)
                                     console.log("Restaurant Distance: " + distance);
                                     // testing modal
                                     var nameEl = (`<div class="foodElement">
                                     <h2 class="foodName">${foodName}</h2>
                                     <p class="foodAddress">${foodAddress}</p>
-                                    <a href="https://google.gprivate.com/search.php?search?q=${foodName + " " + foodAddress}" class="foodLink">Open in Google</a>
+                                    <p class="foodDistance">${distance} ft</p>
+                                    <a href="https://google.gprivate.com/search.php?search?q=${foodName + " " + foodAddress}" target="_blank" class="foodLink">Open in Google</a>
                                     </div>`);
                                     // clear modal before repopulating with new info
                                     modalList.append(nameEl);
                                 }
+                                // close modal when done
                                 modal.addClass("is-active");
                                 modalBg.on("click", () => {
                                     modal.removeClass("is-active");
                                 })
+                                modalClose.on("click", () => {
+                                  modal.removeClass("is-active");
+                              })
                             });
                     };
 
