@@ -17,6 +17,11 @@ $(function () {
   // event listeners
   var searchBtn = $("#searchBtn");
   var checkBoxes = $(".custom-checkbox");
+  var eventName; 
+  var eventDate;
+  var saveBtn;
+  var data;
+// delcare 16-18 globally to use them in the favorites list?
 
   checkBoxes.on("click", function (event) {
     var checkId = $(event.target).attr("id");
@@ -31,12 +36,14 @@ $(function () {
       checkBox = other;
     }
   });
+
   function dateConvert(x) {
     var step1 = x.split("-");console.log();
     var step2 = Date.UTC(step1[0]+0, step1[1] - 1, step1[2]);
     var step3 = new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short', day: '2-digit' }).format(step2);
     return step3.slice(0, -2) + step1[2];
   }
+
   searchBtn.on("click", function () {
     rangeCont.empty();
     searchResults.empty();
@@ -57,12 +64,12 @@ $(function () {
         eventsEl.append(dateRangeEl);
         for (let i = 0; i < data._embedded.events.length; i++) {
           // assign API data
-          var eventName = data._embedded.events[i].name;
+          eventName = data._embedded.events[i].name;
           var venue = data._embedded.events[i]._embedded.venues[0].name;
           var venueLat = data._embedded.events[i]._embedded.venues[0].location.latitude;
           var venueLon = data._embedded.events[i]._embedded.venues[0].location.longitude;
           var venueAddress = data._embedded.events[i]._embedded.venues[0].address.line1;
-          var eventDate = dateConvert(data._embedded.events[i].dates.start.localDate);
+          eventDate = dateConvert(data._embedded.events[i].dates.start.localDate);
           var eventTime = data._embedded.events[i].dates.start.localTime;
           var ticketUrl = data._embedded.events[i].url;
           var imageLink = data._embedded.events[i].images[8].url;
@@ -132,4 +139,23 @@ $(function () {
   
 
 };
+
+var saveBtn = document.querySelector(".favorite")
+    $(document).on("click", saveBtn, function () {
+        localStorage.setItem(eventDate, eventName);
+        console.log("hit");
+        // console.log(eventDate, eventName);
+    });
+
+// PSEUDO CODE:
+        // when save button is clicked, show name/date is saved to local storage
+        // AND event is added to favorites list
+        // AND bookmark icon class is changed to dark/filled in 
+
+        // when added to favorites list:
+        // list item is created dynamically
+        // and classes assigned for styling 
+
+        // when page loads, items saved in local storage populate favorites list 
+
 })
