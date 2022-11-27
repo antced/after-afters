@@ -13,6 +13,10 @@ $(function () {
     // event listeners
     var searchBtn = $("#searchBtn");
     var checkBoxes = $(".custom-checkbox");
+    var eventName; 
+    var eventDate;
+    var saveBtn;
+// delcare 16-18 globally to use them in the favorites list?
 
     checkBoxes.on("click", function (event) {
         var checkId = $(event.target).attr("id");
@@ -43,12 +47,12 @@ $(function () {
 
                 for (let i = 0; i < data._embedded.events.length; i++) {
                     // assign API data
-                    var eventName = data._embedded.events[i].name;
+                    eventName = data._embedded.events[i].name;
                     var venue = data._embedded.events[i]._embedded.venues[0].name;
                     var venueLat = data._embedded.events[i]._embedded.venues[0].location.latitude;
                     var venueLon = data._embedded.events[i]._embedded.venues[0].location.longitude;
                     var venueAddress = data._embedded.events[i]._embedded.venues[0].address.line1;
-                    var eventDate = data._embedded.events[i].dates.start.localDate;
+                    eventDate = data._embedded.events[i].dates.start.localDate;
                     var eventDateB = eventDate.split('-');
                     eventDate = eventDateB[1] + "-" + eventDateB[2] + "-" + eventDateB[0];
                     var eventTime = data._embedded.events[i].dates.start.localTime;
@@ -85,6 +89,34 @@ $(function () {
                 }
             });
 
+            // saveBtn.on("click", function (event) {
+            //     event.preventDefault();
+            //     console.log("hit");
+            //     localStorage.setItem(eventTime, eventName);
+                // var saveBtn = documemt.querySelector(".favorite");
+                // var saveBtn = $('<button class="button custom-btn4 col-on-primary is-small favorite m-1"><i class="fa-solid fa-bookmark col-on-primary"></i></button>');
+                // saveFavorites ();
+            // });
+
+        // var favoritesList = documemt.getElementById("favoritesList")
+        // function saveFavorites () {
+            // var saveBtn = $('<button class="button custom-btn4 col-on-primary is-small favorite m-1"><i class="fa-solid fa-bookmark col-on-primary"></i></button>');
+            // change class from fa-regular to fa-solid to display a dark bookmark
+        // }
+
+        // PSEUDO CODE:
+        // when save button is clicked, show name/date is saved to local storage
+        // AND event is added to favorites list
+        // AND bookmark icon class is changed to dark/filled in 
+
+        // when added to favorites list:
+        // list item is created dynamically
+        // and classes assigned for styling 
+
+        // when page loads, items saved in local storage populate favorites list 
+
+
+
         function findFood(venue, venueAddress, venueLat, venueLon, eventTime, ticketUrl, imageLink, ticketUrl) {
             // limit is how many results
             var limit = 20;
@@ -110,4 +142,11 @@ $(function () {
         }
     }
 
+            
+    // using any clicks on the document, specifying for the saveBtn, should register the click even on dynamically created element
+    var saveBtn = document.querySelector(".favorite")
+    $(document).on("click", saveBtn, function () {
+        localStorage.setItem(eventDate, eventName);
+        console.log("hit");
+    });
 });
