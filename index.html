@@ -36,7 +36,7 @@
     </nav>
     <main class="columns is-centered">
       <section class="column is-one-third is-one-thirds-desktop is-full-tablet-only">
-        <section class="p-4 is-half-tablet-only column">
+        <section class="p-5 is-half-tablet-only column">
           <!-- search param form -->
           <!-- datepicker range -->
           <div class="field col-surface p-4">
@@ -61,13 +61,13 @@
             <section class="py-2 has-text-centered pb-4 custom-radioOb">
               <label class="custom-checkbox col-on-surface px-2 radio"> <input id="checkSports" type="radio" name="radio" /> Sports</label>
               <label class="custom-checkbox col-on-surface px-2 radio"> <input id="checkMusic" type="radio" name="radio" /> Music</label>
-              <label class="custom-checkbox col-on-surface px-2 radio"> <input id="checkOther" type="radio"name="radio" /> Other</label>
+              <label class="custom-checkbox col-on-surface px-2 radio"> <input id="checkOther" type="radio"name="radio" /> All</label>
             </section>
             <button id="searchBtn" class="button is-fullwidth custom-btn col-on-primary">Search</button>
           </div>
         </section>
 
-        <section class="p-4 is-half-tablet-only is-one-third-desktop-only is-full-mobile column">
+        <section class="p-5 is-half-tablet-only is-one-third-desktop-only is-full-mobile column">
           <!-- saved searches -->
           <aside class="p-4 col-surface">
             <h2 class="subtitle is-4 col-on-surface has-text-centered">Favorites</h2>
@@ -81,11 +81,12 @@
         </section>
       </section>
 
-      <article class="is-two-thirds is-two-thirds-tablet column p-4">
+      <article class="is-two-thirds is-two-thirds-tablet column p-5">
         <!-- main search results -->
         <section class="m-3 p-2 col-surface">
-          <section class="p-4">
+          <section class="p-4" id="eventsEl">
             <h2 id="resultsEl" class="col-on-surface subtitle is-4">Upcoming Events</h2>
+            <section id="rangeSec"></section>
           </section>
           <!-- sample search result figure-->
           <section id="searchResults">
@@ -140,6 +141,8 @@ https://s1.ticketm.net/dam/a/4cb/34bfc38a-11b0-430f-a928-b14e338db4cb_442371_TAB
 			  crossorigin="anonymous"></script>
 		
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script>dayjs().format()</script>
     <script src="./assets/js/script.js"></script>
   </body>
 </html>

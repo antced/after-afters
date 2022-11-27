@@ -25,12 +25,13 @@
   --col-s-700: #2ac3de;
   /* icons, elements, text */
   --col-on-bg: #9aa5ce;
-  --col-on-surface: #a9b1d6;
+  --col-on-surface: #b3badb;
   --col-on-primary: #1a1b26;
   --col-on-secondary: #1a1b26;
 }
 ::-webkit-scrollbar {
   width: 0px;
+  display: none;
 }
 body {
   font-family: var(--ff2);
@@ -66,7 +67,7 @@ textarea {
   background-color: var(--col-on-surface);
 }
 input[type="radio"] {
-  accent-color: var(--col-p-200);
+  accent-color: var(--col-s-700);
   width: 1rem;
   height: 1rem;
 }
@@ -85,6 +86,7 @@ input[type="radio"] {
   background-color: var(--col-s-700);
   border-width: 0px;
   border-radius: var(--radius2);
+  font-weight: var(--fw-bold);
 }
 .custom-btn4 {
   background-color: var(--col-s-500);
@@ -114,11 +116,20 @@ a {
 }
 .custom-textBox {
   inline-size: 30ch;
+  max-lines: 3;
 }
 .custom-img {
   height: 64px;
   width: 64px;
-  overflow-x: hidden;
+  overflow: hidden;
+}
+.custom-img img {
+  height: 64px;
+  width: 64px;
+  overflow: hidden;
+  object-fit: cover;
+  border-radius: var(--radius2);
+  box-shadow: inset 4px 4px 6px #0000003b;
 }
 .custom-radioOb {
   display: flex;
@@ -126,9 +137,17 @@ a {
   flex-direction: row;
   flex-wrap: nowrap;
 }
+@media screen and (max-width: 400px) {
+  .custom-img img,
+  .custom-img {
+    height: 48px;
+    width: 48px;
+  }
+}
 @media screen and (max-width: 768px) {
   .custom-textBox {
-    inline-size: 20ch;
+    inline-size: 18ch;
+    max-lines: 3;
   }
   .customMedia {
     display: flex;
@@ -140,6 +159,6 @@ a {
 }
 @media screen and (max-width: 1024px) {
   .custom-textBox {
-    inline-size: 20ch;
+    inline-size: 18ch;
   }
 }
