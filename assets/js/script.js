@@ -1,4 +1,4 @@
-$(function ()
+$(function () {
     // size is how many results
     var size = 24;
     // necessary elements
@@ -16,6 +16,10 @@ $(function ()
     // event listeners
     var searchBtn = $("#searchBtn");
     var checkBoxes = $(".custom-checkbox");
+    // modal stuff
+    var modal = $("#modal");
+    var modalList = $("#modalList");
+    var modalBg = $(".modal-background");
     // favorites variables
     var eventName;
     var eventDate;
@@ -90,7 +94,7 @@ $(function ()
                     var venueEl = $(`<h3 class="col-on-surface custom-textBox"><b>${venue}</b></h3>`);
                     var dateEl = $(`<h3 class="col-on-surface is-6">${eventDate}</h3>`);
                     var bottomSectEl = $('<section class="is-one-quarter is-justify-content-right buttons"></section>');
-                    var foodBtn = $(`<button class="button custom-btn3 col-on-primary is-small m-1" id="foodNearBtn${item}" >Food Nearby</button>`);
+                    var foodBtn = $(`<button class="button custom-btn3 col-on-primary is-small m-1 js-modal-trigger" data-target="modal-js-example" id="foodNearBtn${item}">Food Nearby</button>`);
                     var saveBtn = $('<button class="button custom-btn4 col-on-primary is-small favorite m-1"><i class="fa-regular fa-bookmark col-on-primary"></i></button>');
                     // append elements
                     figureEl.append(imgSectEl);
@@ -125,6 +129,7 @@ $(function ()
                                 return response.json();
                             })
                             .then(function (data) {
+                                modalList.empty();
                                 for (var i = 0; i < data.features.length; i++) {
                                     console.log("_____this is a spacer______")
                                     // all properties
@@ -138,8 +143,19 @@ $(function ()
                                     // distance from venue
                                     var distance = data.features[i].properties.distance;
                                     console.log("Restaurant Distance: " + distance);
+                                    // testing modal
+                                    var nameEl = (`<div class="foodElement">
+                                    <h2 class="foodName">${foodName}</h2>
+                                    <p class="foodAddress">${foodAddress}</p>
+                                    <a href="https://google.gprivate.com/search.php?search?q=${foodName + " " + foodAddress}" class="foodLink">Open in Google</a>
+                                    </div>`);
+                                    // clear modal before repopulating with new info
+                                    modalList.append(nameEl);
                                 }
-
+                                modal.addClass("is-active");
+                                modalBg.on("click", () => {
+                                    modal.removeClass("is-active");
+                                })
                             });
                     };
 
@@ -162,8 +178,8 @@ $(function ()
                     // and classes assigned for styling 
 
                     // when page loads, items saved in local storage populate favorites list 
-                }
-            })
+                };
+            });
     };
 });
 
