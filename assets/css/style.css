@@ -137,6 +137,31 @@ a {
   flex-direction: row;
   flex-wrap: nowrap;
 }
+.box {
+  background-color: var(--col-surface);
+  border-radius: var(--radius);
+}
+.foodElement {
+  background-color: var(--col-surface2);
+  color: var(--col-on-surface);
+  border-radius: var(--radius2);
+  margin: 0.5rem;
+  padding: 1rem;
+}
+.foodName {
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+.foodAddress,
+.foodDistance {
+  margin: 0.25rem 0;
+}
+.foodLink {
+  padding: 0.25rem;
+  color: var(--col-on-primary);
+  background-color: var(--col-p-700);
+  border-radius: var(--radius2);
+}
 @media screen and (max-width: 400px) {
   .custom-img img,
   .custom-img {
