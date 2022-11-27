@@ -23,8 +23,10 @@ $(function () {
     // favorites variables
     var eventName;
     var eventDate;
+    var dateNameArr = [];
     var saveBtn;
-    var data;
+    var favoritesList = $("#favorites-list")
+    // var data;
     // array of latitude and longitude for finding nearby places
     var latLonArr = [];
     // delcare 16-18 globally to use them in the favorites list?
@@ -95,7 +97,7 @@ $(function () {
                     var dateEl = $(`<h3 class="col-on-surface is-6">${eventDate}</h3>`);
                     var bottomSectEl = $('<section class="is-one-quarter is-justify-content-right buttons"></section>');
                     var foodBtn = $(`<button class="button custom-btn3 col-on-primary is-small m-1 js-modal-trigger" data-target="modal-js-example" id="foodNearBtn${item}">Food Nearby</button>`);
-                    var saveBtn = $('<button class="button custom-btn4 col-on-primary is-small favorite m-1"><i class="fa-regular fa-bookmark col-on-primary"></i></button>');
+                    var saveBtn = $(`<button class="button custom-btn4 col-on-primary is-small favorite m-1" id="saveListBtn${item}"><i class="fa-regular fa-bookmark col-on-primary"></i></button>`);
                     // append elements
                     figureEl.append(imgSectEl);
                     imgSectEl.append(imgSizeEl);
@@ -108,7 +110,30 @@ $(function () {
                     figureEl.append(bottomSectEl);
                     bottomSectEl.append(foodBtn);
                     bottomSectEl.append(saveBtn);
+                    dateNameArr.push([eventDate, eventName]);
                     latLonArr.push([venueLat, venueLon]);
+                    // event listener for save button
+                    $(document).on("click", "#saveListBtn" + i, createSaveList);
+                    // create saved list function
+                    function createSaveList (event) {
+                        // limit of favorites list items
+                        var limit = 20;
+                        // name of button clicked
+                        var saveBtnName = $(event.target).attr("id");
+                        var saveBtnNumber = saveBtnName.slice(-1);
+                        // .slice only works if click is on the BUTTON, if the icon is clicked an error is read
+                        // var saveBtnNumber = saveBtnName.slice(-1);
+                        // localStorage.setItem(eventDate, eventName);
+                        console.log(saveBtnName);
+                        console.log(saveBtnNumber);
+                        console.log(dateNameArr);
+                        // save clicked item in local storage
+                        localStorage.setItem(dateNameArr[saveBtnNumber][0], dateNameArr[saveBtnNumber][1]);
+                        // create list item to populate favorites list
+                        var favoriteEl = $(`<button class="button custom-btn2 is-fullwidth col-on-surface my-2">${dateNameArr[saveBtnNumber]}</button>`)
+                        // append item to favorites <ul>
+                        favoritesList.append(favoriteEl);
+                    }
                     // event listener for food nearby button
                     $(document).on("click", "#foodNearBtn" + i, findFood);
                     // food nearby function
@@ -116,7 +141,7 @@ $(function () {
                         // limit is how many results
                         var limit = 20;
                         // name of the button that was clicked
-                        var buttonName = $(event.target).attr("id")
+                        var buttonName = $(event.target).attr("id");
                         var buttonNumber = buttonName.slice(-1);
                         // latitude and longitude of the venue that was clicked
                         var foodLat = latLonArr[buttonNumber][0];
@@ -160,13 +185,13 @@ $(function () {
                     };
 
 
-                    // favorites work
-                    var saveBtn = document.querySelector(".favorite")
-                    $(document).on("click", saveBtn, function () {
-                        localStorage.setItem(eventDate, eventName);
+                    // // favorites work
+                    // var saveBtn = document.querySelector(".favorite")
+                    // $(document).on("click", saveBtn, function () {
+                    //     localStorage.setItem(eventDate, eventName);
                         // console.log("hit");
                         // console.log(eventDate, eventName);
-                    });
+                    // });
 
                     // PSEUDO CODE:
                     // when save button is clicked, show name/date is saved to local storage
