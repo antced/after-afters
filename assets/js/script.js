@@ -133,6 +133,9 @@ $(function () {
                         var favoriteEl = $(`<button class="button custom-btn2 is-fullwidth col-on-surface my-2">${dateNameArr[saveBtnNumber]}</button>`)
                         // append item to favorites <ul>
                         favoritesList.append(favoriteEl);
+                        // change class of <i> from fa-regular to fa-solid (TODO: get the below 2 lines to work)
+                        saveBtn.addClass("fa-solid");
+                        saveBtn.removeClass("fa-regular");
                     }
                     // event listener for food nearby button
                     $(document).on("click", "#foodNearBtn" + i, findFood);
