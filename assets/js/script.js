@@ -56,6 +56,7 @@ $(function () {
       fromDate.value + "T00:00:00," + toDate.value + "T23:59:59&apikey=CHo9U7G9NvQH3YdZsAJYBoNV5by3z3Hq";
     fetch(ticketmasterUrl)
       .then(function (response) {
+        console.log(response);
         return response.json();
       })
       .then(function (data) {
@@ -139,6 +140,7 @@ $(function () {
   
 
 };
+
 
 var saveBtn = document.querySelector(".favorite")
     $(document).on("click", saveBtn, function () {
