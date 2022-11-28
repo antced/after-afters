@@ -13,6 +13,10 @@ $(function () {
     var music = "&classificationName=music&";
     var sports = "&classificationName=sports&";
     var other = "";
+    // API keys
+    var joshGeoKey = "1a63f18a56394acdaa8c0d4783ce52bc";
+    var antGeoKey = "abbaf448e8fd46d789223be439a4096c";
+    var antTicKey = "CHo9U7G9NvQH3YdZsAJYBoNV5by3z3Hq";
     // event listeners
     var searchBtn = $("#searchBtn");
     var checkBoxes = $(".custom-checkbox");
@@ -66,7 +70,7 @@ $(function () {
         // setting the date at top of search results
         dateRange.text(`${dateConvert(fromDate.value)} - ${dateConvert(toDate.value)}`);
         // ticketmaster API link with custom variables
-        var ticketmasterUrl = "https://app.ticketmaster.com/discovery/v2/events.json?" + checkBox + "size=" + size + "&city=[philadelphia]&localStartDateTime=" + fromDate.value + "T00:00:00," + toDate.value + "T23:59:59&apikey=CHo9U7G9NvQH3YdZsAJYBoNV5by3z3Hq";
+        var ticketmasterUrl = "https://app.ticketmaster.com/discovery/v2/events.json?" + checkBox + "size=" + size + "&city=[philadelphia]&localStartDateTime=" + fromDate.value + "T00:00:00," + toDate.value + "T23:59:59&apikey=" + antTicKey;
 
         fetch(ticketmasterUrl)
             .then(function (response) {
@@ -94,8 +98,8 @@ $(function () {
                     var figureEl = $('<figure id="resultContent" class="m-2 px-4 py-3 col-surface2 level customMedia"></figure>');
                     var topSectEl = $('<section class="is-two-thirds has-text-left pl-4">');
                     var anchorEl = $(`<a href="${ticketUrl}" target="_blank"><h3 class="col-on-surface subtitle is-5 custom-textBox">${eventName}</h3></a>`);
-                    var venueEl = $(`<h3 class="col-on-surface custom-textBox"><b>${venue}</b></h3>`);
-                    var dateEl = $(`<h3 class="col-on-surface is-6">${eventDate}</h3>`);
+                    var venueEl = $(`<h3 class="col-on-surface custom-textBox is-unselectable"><b>${venue}</b></h3>`);
+                    var dateEl = $(`<h3 class="col-on-surface is-6 is-unselectable">${eventDate}</h3>`);
                     var bottomSectEl = $('<section class="is-one-quarter is-justify-content-right buttons"></section>');
                     var foodBtn = $(`<button class="button custom-btn3 col-on-primary is-small m-1 js-modal-trigger" data-target="modal-js-example" id="foodNearBtn${item}">Food Nearby</button>`);
                     var saveBtn = $(`<button class="button custom-btn4 col-on-primary is-small favorite m-1" id="saveListBtn${item}"><i class="fa-regular fa-bookmark col-on-primary"></i></button>`);
@@ -150,8 +154,20 @@ $(function () {
                         // latitude and longitude of the venue that was clicked
                         var foodLat = latLonArr[buttonNumber][0];
                         var foodLon = latLonArr[buttonNumber][1];
+                        var isolineURL = "https://api.geoapify.com/v1/isoline?lat=" + foodLat + "&lon=" + foodLon + "&type=time&mode=walk&range=900&apiKey=" + joshGeoKey;
+                        var isoline = "";
+                        fetch(isolineURL)
+                        .then(response => response.json())
+                        .then (function (result) {
+                          isoline = result.properties.id;
+                          // isoline = "fb8dd44c50c56d08c9b09cea8a6df065"; the fillmore ex
+                          console.log("" + isoline);
+                        
+
+                        
+
                         // geoapify API url with custom variables
-                        var geoapifyUrl = "https://api.geoapify.com/v2/places?categories=catering&conditions=named&filter=circle:" + foodLon + "," + foodLat + ",1000&bias=proximity:" + foodLon + "," + foodLat + "&lang=en&limit=" + limit + "&apiKey=abbaf448e8fd46d789223be439a4096c";
+                        var geoapifyUrl = "https://api.geoapify.com/v2/places?categories=catering&conditions=named&filter=geometry:" + isoline + "&bias=proximity:" + foodLon + "," + foodLat + "&lang=en&limit=" + limit + "&apiKey=" + antGeoKey;
 
                         fetch(geoapifyUrl)
                             .then(function (response) {
@@ -173,11 +189,17 @@ $(function () {
                                     var distance = data.features[i].properties.distance;
                                     distance = Math.round(distance*3.281)
                                     console.log("Restaurant Distance: " + distance);
+                                    // type of food/drink
+                                    var type = data.features[i].properties.datasource.raw.amenity;
+                                    type = type.charAt(0).toUpperCase() + type.slice(1);
+                                    type = type.replace(/_/g, ' ');
+                                    console.log("Restaurant type: " + type);
                                     // testing modal
                                     var nameEl = (`<div class="foodElement">
-                                    <h2 class="foodName">${foodName}</h2>
-                                    <p class="foodAddress">${foodAddress}</p>
-                                    <p class="foodDistance">${distance} ft</p>
+                                    <h2 class="foodName is-unselectable">${foodName}</h2>
+                                    <h3 class="foodType is-unselectable"><b>${type}</b></h3>
+                                    <p class="foodAddress is-unselectable">${foodAddress}</p>
+                                    <p class="foodDistance is-unselectable">${distance} ft</p>
                                     <a href="https://google.gprivate.com/search.php?search?q=${foodName + " " + foodAddress}" target="_blank" class="foodLink">Open in Google</a>
                                     </div>`);
                                     // clear modal before repopulating with new info
@@ -192,6 +214,11 @@ $(function () {
                                   modal.removeClass("is-active");
                               })
                             });
+
+
+
+
+                     })       
                     };
 
 
