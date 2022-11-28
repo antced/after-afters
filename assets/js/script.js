@@ -141,7 +141,7 @@ $(function () {
                         localStorage.setItem(JSON.stringify(dateNameArr[saveBtnNumber][1]), JSON.stringify(dateNameUrl));
 
                         // create list item to populate favorites list
-                        var favoriteEl = $(`<a href="${dateNameUrl.link}" target="_blank" class="button custom-btn2 is-fullwidth col-on-surface my-2"></a>`).text(dateNameUrl.name + " " + dateNameUrl.date)
+                        var favoriteEl = $(`<a href="${dateNameUrl.link}" target="_blank" class="button custom-btn2 is-fullwidth col-on-surface my-2 custom-textBox2"></a>`).text(dateNameUrl.name + " " + dateNameUrl.date)
                         // var favoriteEl = $(`<button class="button custom-btn2 is-fullwidth col-on-surface my-2">${dateNameArr[saveBtnNumber]}</button>`)
                         // append item to favorites <ul>
                         favoritesList.append(favoriteEl);
@@ -230,7 +230,7 @@ $(function () {
         var name = storedFavesValue.name;
         var date = storedFavesValue.date;
         var link = storedFavesValue.link;
-        var storedFavEl = $(`<a href="${link}" target="_blank" class="button custom-btn2 is-fullwidth col-on-surface my-2"></a>`).text(name + " " + date);
+        var storedFavEl = $(`<a href="${link}" target="_blank" class="button custom-btn2 is-fullwidth col-on-surface my-2 custom-textBox2"></a>`).text(name + " " + date);
         favoritesList.append(storedFavEl);
         // var savedFaves = JSON.parse(localStorage.getItem([i]));
     }
