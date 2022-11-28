@@ -180,7 +180,18 @@ a {
   overflow: hidden;
   text-overflow: ellipsis;
   justify-content: flex-start;
-
+}
+/* testing hover effects */
+#resultContent:hover {
+  background-color: #32374f;
+}
+#searchBtn:hover {
+  color: white;
+  background: rgb(187,154,247);
+  background: linear-gradient(180deg, rgb(134, 104, 190) 0%, rgb(95, 126, 193) 100%);
+}
+.custom-btn2:hover {
+  background-color: #32374f;
 }
 @media screen and (max-width: 400px) {
   .custom-img img,
