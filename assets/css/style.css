@@ -61,7 +61,10 @@ body {
   box-shadow: 3px 3px 6px #00000018;
 }
 .col-on-surface,
-.col-on-surface:hover {
+.col-on-surface:hover,
+.col-on-surface:focus,
+.col-on-surface:active,
+.col-on-surface:visited {
   color: var(--col-on-surface);
 }
 input,
@@ -174,6 +177,14 @@ a {
   margin: 0.25rem 0;
   color: var(--col-on-surface);
 }
+.custom-textBox2 {
+  inline-size: 10ch;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  justify-content: flex-start;
+
+}
 @media screen and (max-width: 400px) {
   .custom-img img,
   .custom-img {
@@ -185,6 +196,7 @@ a {
   .custom-textBox {
     inline-size: 18ch;
     max-lines: 3;
+    text-align: start;
   }
   .customMedia {
     display: flex;
