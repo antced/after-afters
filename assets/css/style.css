@@ -94,6 +94,12 @@ input[type="radio"] {
   background-color: var(--col-s-500);
   border-width: 0px;
   border-radius: var(--radius2);
+  padding: 0 7px;
+  /* margin: 0; */
+  height: 30px;
+  font-family: "Helvetica";
+  font-size: 100%;
+  font-weight: bold;
 }
 .custom-checkbox,
 .custom-checkbox:hover {
