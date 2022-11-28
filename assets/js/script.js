@@ -29,6 +29,7 @@ $(function () {
     var eventName;
     var eventDate;
     var dateNameArr = [];
+    var urlArr = [];
     var saveBtn;
     var favoritesList = $("#favorites-list")
     // var data;
@@ -116,6 +117,7 @@ $(function () {
                     bottomSectEl.append(foodBtn);
                     bottomSectEl.append(saveBtn);
                     dateNameArr.push([eventDate, eventName]);
+                    urlArr.push([ticketUrl]);
                     latLonArr.push([venueLat, venueLon]);
                     // event listener for save button
                     $(document).on("click", "#saveListBtn" + i, createSaveList);
@@ -135,14 +137,14 @@ $(function () {
                         console.log(saveBtnNumber);
                         console.log(dateNameArr);
                         // save clicked item in local storage
-                        localStorage.setItem(dateNameArr[saveBtnNumber][0], dateNameArr[saveBtnNumber][1]);
+                        var dateNameUrl = { link: urlArr[saveBtnNumber], date: dateNameArr[saveBtnNumber][0], name: dateNameArr[saveBtnNumber][1] }
+                        localStorage.setItem(JSON.stringify(dateNameArr[saveBtnNumber][1]), JSON.stringify(dateNameUrl));
+
                         // create list item to populate favorites list
-                        var favoriteEl = $(`<button class="button custom-btn2 is-fullwidth col-on-surface my-2">${dateNameArr[saveBtnNumber]}</button>`)
+                        var favoriteEl = $(`<a href="${dateNameUrl.link}" target="_blank" class="button custom-btn2 is-fullwidth col-on-surface my-2"></a>`).text(dateNameUrl.name + " " + dateNameUrl.date)
+                        // var favoriteEl = $(`<button class="button custom-btn2 is-fullwidth col-on-surface my-2">${dateNameArr[saveBtnNumber]}</button>`)
                         // append item to favorites <ul>
                         favoritesList.append(favoriteEl);
-                        // change class of <i> from fa-regular to fa-solid (TODO: get the below 2 lines to work)
-                        saveBtn.addClass("fa-solid");
-                        saveBtn.removeClass("fa-regular");
                     }
                     // event listener for food nearby button
                     $(document).on("click", "#foodNearBtn" + i, findFood);
@@ -216,34 +218,21 @@ $(function () {
                                             modal.removeClass("is-active");
                                         })
                                     });
-
-
-
-
                             })
                     };
-
-
-                    // // favorites work
-                    // var saveBtn = document.querySelector(".favorite")
-                    // $(document).on("click", saveBtn, function () {
-                    //     localStorage.setItem(eventDate, eventName);
-                    // console.log("hit");
-                    // console.log(eventDate, eventName);
-                    // });
-
-                    // PSEUDO CODE:
-                    // when save button is clicked, show name/date is saved to local storage
-                    // AND event is added to favorites list
-                    // AND bookmark icon class is changed to dark/filled in 
-
-                    // when added to favorites list:
-                    // list item is created dynamically
-                    // and classes assigned for styling 
-
-                    // when page loads, items saved in local storage populate favorites list 
                 };
             });
     };
+    for (var i = 0; i < 5; i++) {
+        // console.log(JSON.parse(localStorage.getItem(object));
+        var storedFavesKey = Object.keys(localStorage)[i];
+        var storedFavesValue = JSON.parse(Object.values(localStorage)[i]);
+        var name = storedFavesValue.name;
+        var date = storedFavesValue.date;
+        var link = storedFavesValue.link;
+        var storedFavEl = $(`<a href="${link}" target="_blank" class="button custom-btn2 is-fullwidth col-on-surface my-2"></a>`).text(name + " " + date);
+        favoritesList.append(storedFavEl);
+        // var savedFaves = JSON.parse(localStorage.getItem([i]));
+    }
 });
 
