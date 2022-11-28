@@ -209,5 +209,9 @@ $(function () {
                 };
             });
     };
+    for (var i = 0; i < 20; i++) {
+        console.log(JSON.parse(localStorage.getItem[i]));
+        // var savedFaves = JSON.parse(localStorage.getItem([i]));
+    }
 });
 
