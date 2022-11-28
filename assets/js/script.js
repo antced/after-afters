@@ -98,7 +98,7 @@ $(function () {
                     var dateEl = $(`<h3 class="col-on-surface is-6">${eventDate}</h3>`);
                     var bottomSectEl = $('<section class="is-one-quarter is-justify-content-right buttons"></section>');
                     var foodBtn = $(`<button class="button custom-btn3 col-on-primary is-small m-1 js-modal-trigger" data-target="modal-js-example" id="foodNearBtn${item}">Food Nearby</button>`);
-                    var saveBtn = $(`<button class="button custom-btn4 col-on-primary is-small favorite m-1" id="saveListBtn${item}"><i class="fa-regular fa-bookmark col-on-primary"></i></button>`);
+                    var saveBtn = $(`<button class="button custom-btn4 col-on-primary is-small favorite m-1 is-size-5" id="saveListBtn${item}">&#9734;</button>`);
                     // append elements
                     figureEl.append(imgSectEl);
                     imgSectEl.append(imgSizeEl);
@@ -117,12 +117,14 @@ $(function () {
                     // event listener for save button
                     $(document).on("click", "#saveListBtn" + i, createSaveList);
                     // create saved list function
-                    function createSaveList (event) {
+                    function createSaveList(event) {
                         // limit of favorites list items
                         var limit = 5;
                         // name of button clicked
                         var saveBtnName = $(event.target).attr("id");
                         var saveBtnNumber = saveBtnName.slice(-1);
+                        // had to use javascript escape character to input unicode symbol
+                        event.target.textContent = '\u2605';
                         // .slice only works if click is on the BUTTON, if the icon is clicked an error is read
                         // var saveBtnNumber = saveBtnName.slice(-1);
                         // localStorage.setItem(eventDate, eventName);
@@ -155,42 +157,71 @@ $(function () {
                         // latitude and longitude of the venue that was clicked
                         var foodLat = latLonArr[buttonNumber][0];
                         var foodLon = latLonArr[buttonNumber][1];
-                        // geoapify API url with custom variables
-                        var geoapifyUrl = "https://api.geoapify.com/v2/places?categories=catering&bias=proximity:" + foodLon + "," + foodLat + "&limit=" + limit + "&apiKey=abbaf448e8fd46d789223be439a4096c";
+                        var isolineURL = "https://api.geoapify.com/v1/isoline?lat=" + foodLat + "&lon=" + foodLon + "&type=time&mode=walk&range=900&apiKey=" + joshGeoKey;
+                        var isoline = "";
+                        fetch(isolineURL)
+                            .then(response => response.json())
+                            .then(function (result) {
+                                isoline = result.properties.id;
+                                // isoline = "fb8dd44c50c56d08c9b09cea8a6df065"; the fillmore ex
+                                console.log("" + isoline);
 
-                        fetch(geoapifyUrl)
-                            .then(function (response) {
-                                return response.json();
-                            })
-                            .then(function (data) {
-                                modalList.empty();
-                                for (var i = 0; i < data.features.length; i++) {
-                                    console.log("_____this is a spacer______")
-                                    // all properties
-                                    console.log(data.features[i].properties);
-                                    // name
-                                    var foodName = data.features[i].properties.name;
-                                    console.log("Restaurant Name: " + foodName);
-                                    // address
-                                    var foodAddress = data.features[i].properties.address_line2;
-                                    console.log("Restaurant Address: " + foodAddress);
-                                    // distance from venue
-                                    var distance = data.features[i].properties.distance;
-                                    console.log("Restaurant Distance: " + distance);
-                                    // testing modal
-                                    var nameEl = (`<div class="foodElement">
-                                    <h2 class="foodName">${foodName}</h2>
-                                    <p class="foodAddress">${foodAddress}</p>
-                                    <a href="https://google.gprivate.com/search.php?search?q=${foodName + " " + foodAddress}" class="foodLink">Open in Google</a>
+
+
+
+                                // geoapify API url with custom variables
+                                var geoapifyUrl = "https://api.geoapify.com/v2/places?categories=catering&conditions=named&filter=geometry:" + isoline + "&bias=proximity:" + foodLon + "," + foodLat + "&lang=en&limit=" + limit + "&apiKey=" + antGeoKey;
+
+                                fetch(geoapifyUrl)
+                                    .then(function (response) {
+                                        return response.json();
+                                    })
+                                    .then(function (data) {
+                                        modalList.empty();
+                                        for (var i = 0; i < data.features.length; i++) {
+                                            console.log("_____this is a spacer______")
+                                            // all properties
+                                            console.log(data.features[i].properties);
+                                            // name
+                                            var foodName = data.features[i].properties.name;
+                                            console.log("Restaurant Name: " + foodName);
+                                            // address
+                                            var foodAddress = data.features[i].properties.address_line2.slice(0, -26);
+                                            console.log("Restaurant Address: " + foodAddress);
+                                            // distance from venue
+                                            var distance = data.features[i].properties.distance;
+                                            distance = Math.round(distance * 3.281)
+                                            console.log("Restaurant Distance: " + distance);
+                                            // type of food/drink
+                                            var type = data.features[i].properties.datasource.raw.amenity;
+                                            type = type.charAt(0).toUpperCase() + type.slice(1);
+                                            type = type.replace(/_/g, ' ');
+                                            console.log("Restaurant type: " + type);
+                                            // testing modal
+                                            var nameEl = (`<div class="foodElement">
+                                    <h2 class="foodName is-unselectable">${foodName}</h2>
+                                    <h3 class="foodType is-unselectable"><b>${type}</b></h3>
+                                    <p class="foodAddress is-unselectable">${foodAddress}</p>
+                                    <p class="foodDistance is-unselectable">${distance} ft</p>
+                                    <a href="https://google.gprivate.com/search.php?search?q=${foodName + " " + foodAddress}" target="_blank" class="foodLink">Open in Google</a>
                                     </div>`);
-                                    // clear modal before repopulating with new info
-                                    modalList.append(nameEl);
-                                }
-                                modal.addClass("is-active");
-                                modalBg.on("click", () => {
-                                    modal.removeClass("is-active");
-                                })
-                            });
+                                            // clear modal before repopulating with new info
+                                            modalList.append(nameEl);
+                                        }
+                                        // close modal when done
+                                        modal.addClass("is-active");
+                                        modalBg.on("click", () => {
+                                            modal.removeClass("is-active");
+                                        })
+                                        modalClose.on("click", () => {
+                                            modal.removeClass("is-active");
+                                        })
+                                    });
+
+
+
+
+                            })
                     };
 
 
@@ -198,8 +229,8 @@ $(function () {
                     // var saveBtn = document.querySelector(".favorite")
                     // $(document).on("click", saveBtn, function () {
                     //     localStorage.setItem(eventDate, eventName);
-                        // console.log("hit");
-                        // console.log(eventDate, eventName);
+                    // console.log("hit");
+                    // console.log(eventDate, eventName);
                     // });
 
                     // PSEUDO CODE:
