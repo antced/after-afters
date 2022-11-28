@@ -61,7 +61,10 @@ body {
   box-shadow: 3px 3px 6px #00000018;
 }
 .col-on-surface,
-.col-on-surface:hover {
+.col-on-surface:hover,
+.col-on-surface:focus,
+.col-on-surface:active,
+.col-on-surface:visited {
   color: var(--col-on-surface);
 }
 input,
