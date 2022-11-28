@@ -1,6 +1,6 @@
 # dual-api-snack-locator
 
-![GitHub top language](https://img.shields.io/github/languages/top/antced/dual-api-snack-locator?color=%237aa2f7&logo=HTML5&logoColor=%237aa2f7)
+![GitHub top language](https://img.shields.io/github/languages/top/antced/dual-api-snack-locator?color=%237aa2f7&logo=JavaScript&logoColor=%237aa2f7)
 ![GitHub language count](https://img.shields.io/github/languages/count/antced/dual-api-snack-locator?color=%237aa2f7)
 ![GitHub](https://img.shields.io/github/license/antced/dual-api-snack-locator?color=%237aa2f7)
 ![GitHub issues](https://img.shields.io/github/issues/antced/dual-api-snack-locator?color=%237aa2f7)
