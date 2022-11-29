@@ -29,10 +29,10 @@
   --col-on-primary: #1a1b26;
   --col-on-secondary: #1a1b26;
 }
- ::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 0px;
   display: none;
-} 
+}
 body {
   font-family: var(--ff2);
   background-color: var(--col-bg);
@@ -188,10 +188,10 @@ a {
 }
 #searchBtn:hover {
   color: white;
-  background: rgb(187,154,247);
-  background: linear-gradient(180deg, rgb(134, 104, 190) 0%, rgb(95, 126, 193) 100%);
+  background: var(--col-p-500);
+  transition: all ease-out 200ms;
+
   /* this is only making the button text ease and not background color */
-  /* transition: all ease-out 200ms; */
 }
 .custom-btn2:hover {
   transition: all ease-out 200ms;
