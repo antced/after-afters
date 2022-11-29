@@ -142,7 +142,7 @@ $(function () {
                         console.log(favoriteInstructions);
                         if ($("#instructions").length > 0) {
                             $("#instructions").remove()
-                            console.log("hit");
+                            console.log("hit"); 
                         }
                         // create list item to populate favorites list
                         var favoriteEl = $(`<a href="${dateNameUrl.link}" target="_blank" class="button custom-btn2 is-fullwidth col-on-surface my-2 custom-textBox2"></a>`).text(dateNameUrl.name + " " + dateNameUrl.date)
