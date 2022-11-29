@@ -197,6 +197,11 @@ a {
   transition: all ease-out 200ms;
   background-color: #32374f;
 }
+input[type="radio"] {
+  accent-color: var(--col-p-200);
+  width: 1rem;
+  height: 1rem;
+}
 @media screen and (max-width: 400px) {
   .custom-img img,
   .custom-img {
