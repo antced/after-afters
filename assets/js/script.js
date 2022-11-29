@@ -139,7 +139,11 @@ $(function () {
                         // save clicked item in local storage
                         var dateNameUrl = { link: urlArr[saveBtnNumber], date: dateNameArr[saveBtnNumber][0], name: dateNameArr[saveBtnNumber][1] }
                         localStorage.setItem(JSON.stringify(dateNameArr[saveBtnNumber][1]), JSON.stringify(dateNameUrl));
-
+                        console.log(favoriteInstructions);
+                        if ($("#instructions").length > 0) {
+                            $("#instructions").remove()
+                            console.log("hit"); 
+                        }
                         // create list item to populate favorites list
                         var favoriteEl = $(`<a href="${dateNameUrl.link}" target="_blank" class="button custom-btn2 is-fullwidth col-on-surface my-2 custom-textBox2"></a>`).text(dateNameUrl.name + " " + dateNameUrl.date)
                         // var favoriteEl = $(`<button class="button custom-btn2 is-fullwidth col-on-surface my-2">${dateNameArr[saveBtnNumber]}</button>`)
@@ -223,16 +227,23 @@ $(function () {
                 };
             });
     };
-    for (var i = 0; i < 5; i++) {
-        // console.log(JSON.parse(localStorage.getItem(object));
-        var storedFavesKey = Object.keys(localStorage)[i];
-        var storedFavesValue = JSON.parse(Object.values(localStorage)[i]);
-        var name = storedFavesValue.name;
-        var date = storedFavesValue.date;
-        var link = storedFavesValue.link;
-        var storedFavEl = $(`<a href="${link}" target="_blank" class="button custom-btn2 is-fullwidth col-on-surface my-2 custom-textBox2"></a>`).text(name + " " + date);
-        favoritesList.append(storedFavEl);
-        // var savedFaves = JSON.parse(localStorage.getItem([i]));
+    if (localStorage.length == 0) {
+        console.log("empty")
+        var favoriteInstructions = ('<p id="instructions" class="button custom-btn2 is-fullwidth col-on-surface my-2 custom-textBox2">Search and save to add a fave</p>');
+        favoritesList.append(favoriteInstructions);
+    } else {
+        for (var i = 0; i < 5; i++) {
+            // console.log(JSON.parse(localStorage.getItem(object));
+            // var storedFavesKey = Object.keys(localStorage)[i];
+            var storedFavesValue = JSON.parse(Object.values(localStorage)[i]);
+            var name = storedFavesValue.name;
+            var date = storedFavesValue.date;
+            var link = storedFavesValue.link;
+            var storedFavEl = $(`<a href="${link}" target="_blank" class="button custom-btn2 is-fullwidth col-on-surface my-2 custom-textBox2"></a>`).text(name + " " + date);
+            favoritesList.append(storedFavEl);
+            // var savedFaves = JSON.parse(localStorage.getItem([i]));
+        }
     }
-});
+}
+);
 
