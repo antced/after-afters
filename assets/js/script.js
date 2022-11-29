@@ -224,8 +224,13 @@ $(function () {
             });
     };
     for (var i = 0; i < 5; i++) {
+        if (localStorage.length == 0) {
+            console.log("empty")
+            var favoriteInstructions = ('<p class="button custom-btn2 is-fullwidth col-on-surface my-2 custom-textBox2">"Search and save to add a fave"</p>');
+            favoritesList.append(favoriteInstructions);
+        } else {
         // console.log(JSON.parse(localStorage.getItem(object));
-        var storedFavesKey = Object.keys(localStorage)[i];
+        // var storedFavesKey = Object.keys(localStorage)[i];
         var storedFavesValue = JSON.parse(Object.values(localStorage)[i]);
         var name = storedFavesValue.name;
         var date = storedFavesValue.date;
@@ -233,6 +238,7 @@ $(function () {
         var storedFavEl = $(`<a href="${link}" target="_blank" class="button custom-btn2 is-fullwidth col-on-surface my-2 custom-textBox2"></a>`).text(name + " " + date);
         favoritesList.append(storedFavEl);
         // var savedFaves = JSON.parse(localStorage.getItem([i]));
+        }
     }
 });
 
