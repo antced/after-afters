@@ -183,14 +183,18 @@ a {
 }
 /* testing hover effects */
 #resultContent:hover {
+  transition: all ease-out 200ms;
   background-color: #32374f;
 }
 #searchBtn:hover {
   color: white;
   background: rgb(187,154,247);
   background: linear-gradient(180deg, rgb(134, 104, 190) 0%, rgb(95, 126, 193) 100%);
+  /* this is only making the button text ease and not background color */
+  /* transition: all ease-out 200ms; */
 }
 .custom-btn2:hover {
+  transition: all ease-out 200ms;
   background-color: #32374f;
 }
 @media screen and (max-width: 400px) {
