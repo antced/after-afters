@@ -12,9 +12,8 @@ $(function () {
   var sports = "&classificationName=sports&";
   var other = "";
   // API keys
-  var joshGeoKey = "1a63f18a56394acdaa8c0d4783ce52bc";
   var antGeoKey = "abbaf448e8fd46d789223be439a4096c";
-  var antTicKey = "CHo9U7G9NvQH3YdZsAJYBoNV5by3z3Hq";
+  var antTicKey = "ghgomDsOJKAoLZOvB80nZCqmPMZhcfKt";
   // event listeners
   var searchBtn = $("#searchBtn");
   var checkBoxes = $(".custom-checkbox");
@@ -141,7 +140,7 @@ $(function () {
             // latitude and longitude of the venue that was clicked
             var foodLat = latLonArr[buttonNumber][0];
             var foodLon = latLonArr[buttonNumber][1];
-            var isolineURL = "https://api.geoapify.com/v1/isoline?lat=" + foodLat + "&lon=" + foodLon + "&type=time&mode=walk&range=900&apiKey=" + joshGeoKey;
+            var isolineURL = "https://api.geoapify.com/v1/isoline?lat=" + foodLat + "&lon=" + foodLon + "&type=time&mode=walk&range=900&apiKey=" + antGeoKey;
             var isoline = "";
             fetch(isolineURL)
               .then((response) => response.json())
