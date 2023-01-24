@@ -20,7 +20,7 @@ No install required - simply click the link in the following section
 
 ## Usage
 
-To use After Afters, please use the following link: [After Afters](https://antced.github.io/dual-api-snack-locator/)
+To use After Afters, please use the following link: [After Afters](https://antced.github.io/after-afters/)
 
 ### Directions
 
